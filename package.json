@@ -1,0 +1,14 @@
+{
+  "name": "freaking-math-nodejs",
+  "version": "1.0.0",
+  "description": "project for training html5 fb instant game",
+  "main": "index.js",
+  "repository": "https://github.com/starfall-9000/freaking-math-nodejs",
+  "author": "starfall_9000 <starfall.9000.21@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
