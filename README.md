@@ -8,3 +8,6 @@ create new node js project
 
 `yarn init` or `npm init`
 
+using heroku to deploy
+
+heroku set enviroment variable `heroku config:set ENV_VAR=2`

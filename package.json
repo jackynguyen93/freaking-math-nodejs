@@ -4,7 +4,10 @@
   "description": "project for training html5 fb instant game",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-local": "heroku local web",
+    "heroku-deploy": "git push heroku master",
+    "heroku-debug": "heroku run bash"
   },
   "repository": "https://github.com/starfall-9000/freaking-math-nodejs",
   "author": "starfall_9000 <starfall.9000.21@gmail.com>",
