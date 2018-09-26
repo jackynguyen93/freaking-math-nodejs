@@ -10,4 +10,8 @@ create new node js project
 
 using heroku to deploy
 
-heroku set enviroment variable `heroku config:set ENV_VAR=2`
+heroku set enviroment variable: `heroku config:set ENV_VAR=2`
+
+addon progresql: `heroku addons:create heroku-postgresql:hobby-dev`
+
+remote db: `heroku pg:psql`

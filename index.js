@@ -5,7 +5,29 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express().use(bodyParser.json()) // creates express http server
 
+const { Pool } = require('pg')
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+})
+
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
+
+// Connect to db
+app.get('/db', async (req, res) => {
+  try {
+    const client = await pool.connect()
+    const result = await client.query('SELECT * FROM Player')
+    const results = {
+      results: result ? result.rows : null
+    }
+    res.json(results)
+    client.release()
+  } catch (error) {
+    console.error(error)
+    res.send('Error ' + error)
+  }
+})
 
 // Creates the endpoint for our webhook
 app.post('/', (req, res) => {
