@@ -2,7 +2,7 @@
 
 ## sync player
 
-Endpoint: `v1/player/sync`
+Endpoint: `/v1/player/sync`
 
 Method: POST
 
@@ -28,7 +28,7 @@ Response:
 
 ## join new game
 
-Endpoint: `v1/context/join`
+Endpoint: `/v1/context/join`
 
 Method: POST
 
@@ -53,7 +53,7 @@ Response:
 
 ## get opponent player
 
-Endpoint: `v1/context/opponent/info/{contextID}`
+Endpoint: `/v1/context/opponent/info/{contextID}`
 
 Method: GET
 
@@ -77,7 +77,7 @@ Response:
 
 ## quit game
 
-Endpoint: `v1/context/quit/{contextID}`
+Endpoint: `/v1/context/quit/{contextID}`
 
 Method: PUT
 
@@ -94,7 +94,7 @@ Response:
 
 ## end game
 
-Endpoint: `v1/context/end`
+Endpoint: `/v1/context/end`
 
 Method: POST
 
@@ -105,6 +105,7 @@ Params:
 | params    | type   | decription |
 | --------- | ------ | ---------- |
 | contextID | string | required   |
+| playerID  | string | required   |
 | score     | number | required   |
 
 Response:
