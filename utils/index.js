@@ -8,4 +8,13 @@ module.exports = function() {
       data
     }
   }
+
+  this.formatString = (str, ...values) => {
+    var formatted = str
+    for (var i = 0; i < values.length; i++) {
+      var regexp = new RegExp('\\{' + i + '\\}', 'gi')
+      formatted = formatted.replace(regexp, values[i])
+    }
+    return formatted
+  }
 }

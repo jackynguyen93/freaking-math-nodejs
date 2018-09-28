@@ -1,7 +1,7 @@
 'use strict'
 
 // Local import
-require('./utils/response')()
+require('./utils')()
 const apis = require('./apis')
 
 // Imports dependencies and set up http server
