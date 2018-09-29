@@ -8,7 +8,7 @@ Method: POST
 
 Description: create or sync user data with server, call when open game.
 
-Params:
+Body:
 
 | params          | type   | decription |
 | --------------- | ------ | ---------- |
@@ -34,7 +34,7 @@ Method: POST
 
 Decription: create new room with 2 player, call when match 2 player success in pvp mode
 
-Params:
+Body:
 
 | params    | type   | decription    |
 | --------- | ------ | ------------- |
@@ -53,9 +53,16 @@ Response:
 
 ## get opponent player
 
-Endpoint: `/v1/context/opponent/info/{contextID}`
+Endpoint: `/v1/context/opponent/info`
 
 Method: GET
+
+Params:
+
+| params    | type   | decription |
+| --------- | ------ | ---------- |
+| contextID | string | required   |
+| playerID  | string | required   |
 
 Decription: call to get opponent info, call after join new game and after game over
 
@@ -100,7 +107,7 @@ Method: POST
 
 Decription: call when game over, sync new score
 
-Params:
+Body:
 
 | params    | type   | decription |
 | --------- | ------ | ---------- |
