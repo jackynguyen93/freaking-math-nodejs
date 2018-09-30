@@ -26,9 +26,9 @@ Response:
 }
 ```
 
-## join new game
+## update game status
 
-Endpoint: `/v1/context/join`
+Endpoint: `/v1/context/ready`
 
 Method: POST
 

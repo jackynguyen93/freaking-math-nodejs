@@ -74,6 +74,7 @@ const joinFieldValue = (listField, listValue, separate = ', ') => {
 const joinListValue = (listValue, separate = ', ') => {
   return listValue
     .map(value => {
+      if (value === null) return 'null'
       return typeof value === 'string' ? formatString("'{0}'", value) : value
     })
     .join(separate)

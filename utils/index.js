@@ -17,4 +17,24 @@ module.exports = function() {
     }
     return formatted
   }
+
+  this.underscoreToCamel = myString => {
+    var camelCased = myString.replace(/_([a-z])/g, function(g) {
+      return g[1].toUpperCase()
+    })
+
+    return camelCased
+  }
+
+  this.parseData = data => {
+    let parseData = {}
+    const listDataKeys = Object.keys(data)
+
+    listDataKeys.forEach(key => {
+      const newKey = this.underscoreToCamel(key)
+      parseData[newKey] = data[key]
+    })
+
+    return parseData
+  }
 }
