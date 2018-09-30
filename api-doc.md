@@ -10,12 +10,12 @@ Description: create or sync user data with server, call when open game.
 
 Body:
 
-| params          | type   | decription |
-| --------------- | ------ | ---------- |
-| playerID        | string | require    |
-| playerName      | string |            |
-| playerAvatar    | string |            |
-| playerBestScore | number |            |
+| params     | type   | decription |
+| ---------- | ------ | ---------- |
+| playerID   | string | require    |
+| playerName | string |            |
+| avatar     | string |            |
+| bestScore  | number |            |
 
 Response:
 

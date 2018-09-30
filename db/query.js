@@ -30,6 +30,21 @@ const select = (field, table, condition) => {
   return query
 }
 
+const insertInto = (table, field, value) => {
+  if (!table || !value) throw 'not correct format'
+
+  let query = formatString(
+    'INSERT INTO {0}{1} VALUES ({2})',
+    table,
+    field ? formatString(' ({0})', field) : '',
+    value
+  )
+
+  console.log('db insert query: ' + query)
+
+  return query
+}
+
 const innerJoin = (table1, table2, condition) => {
   if (!table1 || !table2 || !condition) throw 'not correct format'
 
@@ -56,9 +71,19 @@ const joinFieldValue = (listField, listValue, separate = ', ') => {
   return updateItem.join(separate)
 }
 
+const joinListValue = (listValue, separate = ', ') => {
+  return listValue
+    .map(value => {
+      return typeof value === 'string' ? formatString("'{0}'", value) : value
+    })
+    .join(separate)
+}
+
 module.exports = {
   update,
   select,
+  insertInto,
   innerJoin,
-  joinFieldValue
+  joinFieldValue,
+  joinListValue
 }

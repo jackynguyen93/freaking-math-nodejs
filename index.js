@@ -14,3 +14,4 @@ app.listen(port, () => console.log('webhook is listening in port: ' + port))
 
 apis.addContextApi(app)
 apis.addWebhooksApi(app)
+apis.addPlayerApi(app)

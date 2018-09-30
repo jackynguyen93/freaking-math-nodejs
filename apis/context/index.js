@@ -1,7 +1,6 @@
 const errorCode = require('../../constants/errorCode')
-const pool = require('../../db')
 require('../../utils')()
-const query = require('../../db/query')
+const { client, query } = require('../../db')
 
 module.exports = function addContextApi(app) {
   app.post('/v1/context/end', async (req, res) => {
@@ -29,8 +28,8 @@ module.exports = function addContextApi(app) {
       const updateQuery = query.update('match', values, condition)
 
       try {
-        const client = await pool.connect()
-        await client.query(updateQuery)
+        await client.connect()
+        await client.transactionQuery([updateQuery])
 
         res.json(formatResponse(errorCode.SUCCESS))
         client.release()
@@ -78,7 +77,7 @@ module.exports = function addContextApi(app) {
       const selectQuery = query.select(field, table, condition)
 
       try {
-        const client = await pool.connect()
+        await client.connect()
         const result = await client.query(selectQuery)
         const data = result && result.rows && result.rows[0]
 
