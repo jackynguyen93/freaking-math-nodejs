@@ -80,7 +80,7 @@ module.exports = function addContextApi(app) {
         await client.connect()
         const result = await client.query(selectQuery)
         const data = result && result.rows && result.rows[0]
-        const parse = parseData(data)
+        const parse = data && parseData(data)
 
         res.json(formatResponse(errorCode.SUCCESS, parse))
         client.release()
