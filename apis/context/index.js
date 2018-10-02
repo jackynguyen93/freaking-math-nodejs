@@ -10,7 +10,12 @@ module.exports = function addContextApi(app) {
       if (!body) throw errorCode.WRONG_API
 
       const { contextID, playerID, score } = body
-      if (!contextID || !playerID || !score || !parseInt(score))
+      if (
+        !contextID ||
+        !playerID ||
+        score === undefined ||
+        isNaN(parseInt(score))
+      )
         throw errorCode.WRONG_API
 
       const listField = ['score', 'update_time']
