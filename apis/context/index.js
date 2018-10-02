@@ -18,8 +18,8 @@ module.exports = function addContextApi(app) {
       )
         throw errorCode.WRONG_API
 
-      const listField = ['score', 'update_time']
-      const listValue = [parseInt(score), Date.now() / 1000]
+      const listField = ['score', 'is_ready', 'update_time']
+      const listValue = [parseInt(score), false, Date.now() / 1000]
       const values = query.joinFieldValue(listField, listValue)
 
       const listFieldCondition = ['context_id', 'player_id']
