@@ -123,3 +123,54 @@ Response:
   "msg": "OK"
 }
 ```
+
+## subscribe game player
+
+Endpoint: `/v1/player/subscribe`
+
+Method: GET
+
+Params:
+
+| params    | type   | decription |
+| --------- | ------ | ---------- |
+| contextID | string | required   |
+| playerID  | string | required   |
+
+Decription: call to subscribe user to listen event from the game, should be call per 5 seconds
+
+Response:
+
+```json
+{
+  "code": 200,
+  "msg": "OK",
+  "data": {
+    "event": "none"
+  }
+}
+```
+
+## challenge a player
+
+Endpoint: `/v1/context/challenge`
+
+Method: POST
+
+Decription: call to challenge a player
+
+Params:
+
+| params     | type   | decription |
+| ---------- | ------ | ---------- |
+| contextID  | string | required   |
+| opponentID | string | required   |
+
+Response:
+
+```json
+{
+  "code": 200,
+  "msg": "OK"
+}
+```
