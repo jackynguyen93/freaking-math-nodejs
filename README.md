@@ -15,3 +15,8 @@ heroku set enviroment variable: `heroku config:set ENV_VAR=2`
 addon progresql: `heroku addons:create heroku-postgresql:hobby-dev`
 
 remote db: `heroku pg:psql`
+
+using pgweb: `heroku config:get DATABASE_URL | xargs pgweb --url`
+
+pgweb with localhost: `pgweb --host localhost`
+

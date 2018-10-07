@@ -174,3 +174,27 @@ Response:
   "msg": "OK"
 }
 ```
+
+## reject a challenge
+
+Endpoint: `/v1/context/challenge/reject`
+
+Method: POST
+
+Decription: call to reject a challenge
+
+Params:
+
+| params          | type   | decription |
+| --------------- | ------ | ---------- |
+| playerID        | string | required   |
+| contextRejected | string | required   |
+
+Response:
+
+```json
+{
+  "code": 200,
+  "msg": "OK"
+}
+```
