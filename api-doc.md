@@ -153,7 +153,7 @@ Response:
 
 ## challenge a player
 
-Endpoint: `/v1/context/challenge`
+Endpoint: `/v2/context/challenge`
 
 Method: POST
 
@@ -163,7 +163,7 @@ Params:
 
 | params     | type   | decription |
 | ---------- | ------ | ---------- |
-| contextID  | string | required   |
+| playerID   | string | required   |
 | opponentID | string | required   |
 
 Response:
