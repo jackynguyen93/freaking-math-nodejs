@@ -177,7 +177,7 @@ Response:
 
 ## reject a challenge
 
-Endpoint: `/v1/context/challenge/reject`
+Endpoint: `/v2/context/challenge/reject`
 
 Method: POST
 
@@ -185,10 +185,10 @@ Decription: call to reject a challenge
 
 Params:
 
-| params          | type   | decription |
-| --------------- | ------ | ---------- |
-| playerID        | string | required   |
-| contextRejected | string | required   |
+| params     | type   | decription |
+| ---------- | ------ | ---------- |
+| playerID   | string | required   |
+| opponentID | string | required   |
 
 Response:
 

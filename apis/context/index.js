@@ -291,6 +291,45 @@ module.exports = function addContextApi(app) {
       else res.json(formatResponse(errorCode.UNKNOWN))
     }
   })
+
+  app.post('/v2/context/challenge/reject', async (req, res) => {
+    let body = req.body
+
+    try {
+      if (!body) throw errorCode.WRONG_API
+
+      const { playerID, opponentID } = body
+      if (!playerID || !opponentID) throw errorCode.WRONG_API
+
+      const query1 = getChallengeQuery(playerID, opponentID, 'none')
+      const query2 = getChallengeQuery(opponentID, playerID, 'rejected')
+
+      try {
+        await client.connect()
+        const result1 = await client.transactionQuery([query1.updateQuery])
+        const result2 = await client.transactionQuery([query2.updateQuery])
+
+        if (result1.rowCount === 0) {
+          console.log('update not success: ' + playerID + ' ' + opponentID)
+          await client.transactionQuery([query1.insertQuery])
+        }
+        if (result2.rowCount === 0) {
+          console.log('update not success: ' + opponentID + ' ' + playerID)
+          await client.transactionQuery([query2.insertQuery])
+        }
+
+        res.json(formatResponse(errorCode.SUCCESS))
+        client.release()
+      } catch (error) {
+        console.error(error)
+        throw errorCode.DB_ERROR
+      }
+    } catch (error) {
+      console.error(error)
+      if (errorCode.hasOwnProperty(error)) res.json(formatResponse(error))
+      else res.json(formatResponse(errorCode.UNKNOWN))
+    }
+  })
 }
 
 function getChallengeQuery(p1, p2, status) {
