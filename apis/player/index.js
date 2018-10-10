@@ -70,7 +70,7 @@ module.exports = function addPlayerApi(app) {
 
       const listField = ['challenge_context']
       const field = listField.join(', ')
-      const condition = query.joinFieldValue(['player_id'], [playerID], ' and ')
+      const condition = query.joinFieldValue(['player_id'], [playerID], ' AND ')
       const selectQuery = query.select(field, 'player', condition)
 
       try {

@@ -75,7 +75,7 @@ module.exports = function addContextApi(app) {
       )
       const condition = formatString(
         "{0} and m.player_id<>'{1}'",
-        query.joinFieldValue(['m.context_id'], [contextID], ' and '),
+        query.joinFieldValue(['m.context_id'], [contextID], ' AND '),
         playerID
       )
 
@@ -319,6 +319,58 @@ module.exports = function addContextApi(app) {
         }
 
         res.json(formatResponse(errorCode.SUCCESS))
+        client.release()
+      } catch (error) {
+        console.error(error)
+        throw errorCode.DB_ERROR
+      }
+    } catch (error) {
+      console.error(error)
+      if (errorCode.hasOwnProperty(error)) res.json(formatResponse(error))
+      else res.json(formatResponse(errorCode.UNKNOWN))
+    }
+  })
+
+  app.get('/v2/context/challenge/info', async (req, res) => {
+    let params = req.query
+
+    try {
+      if (!params) throw errorCode.WRONG_API
+
+      const { playerID, opponentID } = params
+      if (!playerID || !opponentID) throw errorCode.WRONG_API
+
+      const listField = [
+        'c.player_id',
+        'c.player_score',
+        'c.status',
+        'c.opponent_id',
+        'c.opponent_score',
+        'p.player_name as opponent_name',
+        'p.avatar as opponent_avatar',
+        'p.best_score as opponent_best_score'
+      ]
+      const field = listField.join(', ')
+      const table = query.innerJoin(
+        'challenge as c',
+        'player as p',
+        'c.opponent_id = p.player_id'
+      )
+      const condition = query.joinFieldValue(
+        ['c.player_id', 'c.opponent_id'],
+        [playerID, opponentID],
+        ' AND '
+      )
+
+      const selectQuery = query.select(field, table, condition)
+
+      try {
+        await client.connect()
+        const result = await client.query(selectQuery)
+        const data = result && result.rows && result.rows[0]
+        const parse = data && parseData(data)
+
+        res.json(formatResponse(errorCode.SUCCESS, parse))
         client.release()
       } catch (error) {
         console.error(error)
