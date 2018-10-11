@@ -73,11 +73,13 @@ Response:
   "code": 200,
   "msg": "OK",
   "data": {
-    "opponentID": "124352345",
-    "opponentName": "An Binh",
-    "opponentAvatar": "https://1.bp.blogspot.com/-rSZt-EcbQ9M/WDKskLq03XI/AAAAAAAAOps/UXTVLZ9ApDMc6cwXusgrKndugVKPk8lpgCK4B/s400/Phanpy.png",
-    "opponentBestScore": 23,
-    "opponentScore": 15
+    "contextId": "12341234",
+    "playerId": "124352345",
+    "playerName": "An Binh",
+    "avatar": "https://1.bp.blogspot.com/-rSZt-EcbQ9M/WDKskLq03XI/AAAAAAAAOps/UXTVLZ9ApDMc6cwXusgrKndugVKPk8lpgCK4B/s400/Phanpy.png",
+    "bestScore": 23,
+    "score": 3,
+    "isReady": false
   }
 }
 ```
@@ -213,6 +215,41 @@ Params:
 | ---------- | ------ | ---------- |
 | playerID   | string | required   |
 | opponentID | string | required   |
+
+Response:
+
+```json
+{
+  "code": 200,
+  "msg": "OK",
+  "data": {
+    "playerId": "124352345",
+    "playerScore": 5,
+    "status": "challenged",
+    "opponentId": "12314141",
+    "opponentScore": 8,
+    "opponentName": "An Binh",
+    "opponentAvatar": "https://1.bp.blogspot.com/-rSZt-EcbQ9M/WDKskLq03XI/AAAAAAAAOps/UXTVLZ9ApDMc6cwXusgrKndugVKPk8lpgCK4B/s400/Phanpy.png",
+    "opponentBestScore": 23
+  }
+}
+```
+
+## end challenge
+
+Endpoint: `/v2/context/challenge/end`
+
+Method: POST
+
+Decription: call to handle gameover of a challenge
+
+Params:
+
+| params     | type   | decription |
+| ---------- | ------ | ---------- |
+| playerID   | string | required   |
+| opponentID | string | required   |
+| score      | string | required   |
 
 Response:
 

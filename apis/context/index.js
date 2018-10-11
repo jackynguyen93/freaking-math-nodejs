@@ -382,6 +382,37 @@ module.exports = function addContextApi(app) {
       else res.json(formatResponse(errorCode.UNKNOWN))
     }
   })
+
+  app.post('/v2/context/challenge/end', async (req, res) => {
+    let body = req.body
+
+    try {
+      if (!body) throw errorCode.WRONG_API
+
+      const { playerID, opponentID, score } = body
+      if (!playerID || !opponentID) throw errorCode.WRONG_API
+
+      const updateQuery = getEndChallengeQuery(
+        playerID,
+        opponentID,
+        parseInt(score)
+      )
+
+      try {
+        await client.connect()
+        await client.transactionQuery(updateQuery)
+        res.json(formatResponse(errorCode.SUCCESS))
+        client.release()
+      } catch (error) {
+        console.error(error)
+        throw errorCode.DB_ERROR
+      }
+    } catch (error) {
+      console.error(error)
+      if (errorCode.hasOwnProperty(error)) res.json(formatResponse(error))
+      else res.json(formatResponse(errorCode.UNKNOWN))
+    }
+  })
 }
 
 function getChallengeQuery(p1, p2, status) {
@@ -399,4 +430,26 @@ function getChallengeQuery(p1, p2, status) {
   const updateQuery = query.update('challenge', updateValue, updateCondition)
 
   return { insertQuery, updateQuery }
+}
+
+function getEndChallengeQuery(p1, p2, score) {
+  const updateValue1 = query.joinFieldValue(
+    ['player_score', 'status'],
+    [score, 'none']
+  )
+  const updateValue2 = query.joinFieldValue(['opponent_score'], [score])
+  const updateCondition1 = query.joinFieldValue(
+    ['player_id', 'opponent_id'],
+    [p1, p2],
+    ' AND '
+  )
+  const updateCondition2 = query.joinFieldValue(
+    ['player_id', 'opponent_id'],
+    [p2, p1],
+    ' AND '
+  )
+  const updateQuery1 = query.update('challenge', updateValue1, updateCondition1)
+  const updateQuery2 = query.update('challenge', updateValue2, updateCondition2)
+
+  return [updateQuery1, updateQuery2]
 }
