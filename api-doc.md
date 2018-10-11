@@ -126,7 +126,7 @@ Response:
 
 ## subscribe game player
 
-Endpoint: `/v1/player/subscribe`
+Endpoint: `/v2/player/subscribe`
 
 Method: GET
 
@@ -182,6 +182,30 @@ Endpoint: `/v2/context/challenge/reject`
 Method: POST
 
 Decription: call to reject a challenge
+
+Params:
+
+| params     | type   | decription |
+| ---------- | ------ | ---------- |
+| playerID   | string | required   |
+| opponentID | string | required   |
+
+Response:
+
+```json
+{
+  "code": 200,
+  "msg": "OK"
+}
+```
+
+## get challenge info
+
+Endpoint: `/v2/context/challenge/info`
+
+Method: GET
+
+Decription: call to get info of a challenge
 
 Params:
 

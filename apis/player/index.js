@@ -101,4 +101,49 @@ module.exports = function addPlayerApi(app) {
       else res.json(formatResponse(errorCode.UNKNOWN))
     }
   })
+
+  app.get('/v2/player/subscribe', async (req, res) => {
+    let params = req.query
+
+    try {
+      if (!params) throw errorCode.WRONG_API
+
+      const { contextID, playerID } = params
+      if (!playerID) throw errorCode.WRONG_API //warning: not verify contextID
+
+      const listField = ['opponent_id', 'opponent_score', 'status']
+      const field = listField.join(', ')
+      const condition = query.joinFieldValue(['player_id'], [playerID], ' AND ')
+      const selectQuery = query.select(field, 'challenge', condition)
+
+      try {
+        await client.connect()
+        const result = await client.query(selectQuery)
+        const data = result && result.rows && result.rows[0]
+
+        let parseData = {}
+        const status = data && data['status']
+        if (!status || status === 'none') {
+          parseData = { event: 'none' }
+        } else {
+          parseData = {
+            event: 'challenge',
+            status,
+            opponentID: data['opponent_id'],
+            opponentScore: data['opponent_score']
+          }
+        }
+        res.json(formatResponse(errorCode.SUCCESS, parseData))
+
+        client.release()
+      } catch (error) {
+        console.error(error)
+        throw errorCode.DB_ERROR
+      }
+    } catch (error) {
+      console.error(error)
+      if (errorCode.hasOwnProperty(error)) res.json(formatResponse(error))
+      else res.json(formatResponse(errorCode.UNKNOWN))
+    }
+  })
 }
